@@ -1,0 +1,34 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+   
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title></title>
+  </head>
+  <style>
+    .h2{
+      background-color: blueviolet;
+    }
+  </style>
+  <body>
+    {% include "exam/navbar.html" %}
+    <br><br><br><br><br>
+
+<center>
+<img src="{% static "image/success.png" %}" height="200" width="400"class="profile_image" alt="">
+</center>
+<h2 class="text-center" style="text-shadow: 1px 1px;"><b><em>LogOut Successful <br>You have Successfully logged out.</em></b></h2>
+
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br>
+{% include "exam/footer.html" %}
+
+  </body>
+</html>
