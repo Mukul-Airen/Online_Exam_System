@@ -18,51 +18,72 @@
   user-select: none;
 
 }
+#ten-countdown{
+    /* text-align: center; */
+    border: 5px solid #004853;
+    display:inline;
+    padding: 5px;
+    color: #004853;
+    font-family: Verdana, sans-serif, Arial;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+}
   </style>
 </head>
 
 
 <div class="jumbotron my-4">
   <div class="unselectable">
-  <form class="form" autocomplete="off" onsubmit="return saveAns()"  action="/student/calculate-marks" method="POST">
+  <form class="form" autocomplete="off" onsubmit="return saveAns()"  action="/student/calculate-marks" method="POST" name="form">
     {% csrf_token %}
-    <h2 style="text-align: center;"><b>Course: {{course.course_name}}</b></h2>
+    <h2 style="text-align: center; text-shadow: 1px 1px;"><b>Course: {{course.course_name}}</b></h2>
+    <h3 style="text-align: left; text-shadow: 1px 1px;" id="p1">Total Question: <b>{{total_questions}}</b></h3>
+    <h3 style="text-align: left; text-shadow: 1px 1px;" id="p1">Total Time: <b>{{total_questions}} min</b></h3> 
+    <h3 style="text-align: left; text-shadow: 1px 1px;" id="p1"><mark>Time Remaning:</mark></h3> 
+    <div id="clockdiv"></div>
+    <a href="http://simplestepscode.com/" target="_blank"></a>
     {% for q in questions%}
-    <h3 class="text-danger">{{ forloop.counter }}. {{q.question}}</h3><h4 style="text-align: right;">[{{q.marks}} Marks]</h4>
+    <br>
+    <pre class="text-danger" style="font-size:16px; font-weight: bold;" >{{ forloop.counter }}. {{q.question}}</pre><h4 style="text-align: right;">[{{q.marks}} Marks]</h4>
     
         <input type="hidden" name="csrfmiddlewaretoken" value="C24rUotmdHawVQJL3KrqiWxvti8UffOFYUc8TRbZtLt36AVLdP3jbkzUVe3beRAa">
        
           <div class="form-check mx-4">
+            <pre>
             <input class="form-check-input" type="radio" name="{{ forloop.counter }}" id="{{q.option1}}" value="Option1">
-            <label class="form-check-label" for="option1">
-            {{q.option1}}
+            <label class="form-check-label" for="option1" style="font-size:12px">    {{q.option1}}  
             </label>
+            </pre>
           </div>
 
         
           <div class="form-check mx-4">
+            <pre>
             <input class="form-check-input" type="radio" name="{{ forloop.counter }}" id="{{q.option2}}" value="Option2">
-            <label class="form-check-label" for="option2">
-              {{q.option2}}
+            <label class="form-check-label" for="option2" style="font-size:12px">    {{q.option2}}
             </label>
+            </pre>
           </div>
 
         
           <div class="form-check mx-4">
+            <pre>
             <input class="form-check-input" type="radio" name="{{ forloop.counter }}" id="{{q.option3}}" value="Option3">
-            <label class="form-check-label" for="option3">
-              {{q.option3}}
+            <label class="form-check-label" for="option3" style="font-size:12px">    {{q.option3}}
             </label>
+            </pre>
           </div>
 
         
           <div class="form-check mx-4">
+            <pre>
             <input class="form-check-input" type="radio" name="{{ forloop.counter }}" id="{{q.option4}}" value="Option4">
-            <label class="form-check-label" for="option4">
-              {{q.option4}}
+            <label class="form-check-label" for="option4" style="font-size:12px">    {{q.option4}}
             </label>
+            </pre>
           </div>
-       
+      
         {% endfor %}
         <input class="btn btn-success btn-lg" style="border-radius: 0%;"  type="submit" value="Submit Answers">  
     </form>
@@ -91,6 +112,35 @@
 }
 
 </script> 
+
+<script>
+  var time_in_minutes = "{{total_questions}}";
+  var current_time = Date.parse(new Date());
+  var deadline = new Date(current_time + time_in_minutes*60*1000);
+  
+  
+  function time_remaining(endtime){
+    var t = Date.parse(endtime) - Date.parse(new Date());
+    var seconds = Math.floor( (t/1000) % 60 );
+    var minutes = Math.floor( (t/1000/60) % 60 );
+    var hours = Math.floor( (t/(1000*60*60)) % 24 );
+    var days = Math.floor( t/(1000*60*60*24) );
+    return {'total':t, 'days':days, 'hours':hours, 'minutes':minutes, 'seconds':seconds};
+  }
+  function run_clock(id,endtime){
+    var clock = document.getElementById(id);
+    function update_clock(){
+      var t = time_remaining(endtime);
+      clock.innerHTML = 'minutes: '+t.minutes+'<br>seconds: '+t.seconds;
+      if(t.total<=0.01){ alert("Time up!"); }
+      if(t.total<=0){ setTimeout(document.form.submit()); }
+    }
+    update_clock(); // run function once at first to avoid delay
+    var timeinterval = setInterval(update_clock,1000);
+  }
+  run_clock('clockdiv',deadline);
+    
+    </script> 
 
 <br><br><br><br><br><br>
 {% endblock content %}

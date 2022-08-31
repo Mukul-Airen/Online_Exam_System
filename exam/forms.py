@@ -22,5 +22,11 @@ class QuestionForm(forms.ModelForm):
         model=models.Question
         fields=['marks','question','option1','option2','option3','option4','answer']
         widgets = {
-            'question': forms.Textarea(attrs={'rows': 3, 'cols': 50})
+            'question': forms.Textarea(attrs={'rows': 3, 'cols': 50}),
+            'option1': forms.Textarea(attrs={'rows': 3, 'cols': 50}),
+            'option2': forms.Textarea(attrs={'rows': 3, 'cols': 50}),
+            'option3': forms.Textarea(attrs={'rows': 3, 'cols': 50}),
+            'option4': forms.Textarea(attrs={'rows': 3, 'cols': 50}),
         }
+      
+

@@ -69,10 +69,11 @@ def take_exam_view(request,pk):
 @user_passes_test(is_student)
 def start_exam_view(request,pk):
     course=QMODEL.Course.objects.get(id=pk)
+    total_questions=QMODEL.Question.objects.all().filter(course=course).count()
     questions=QMODEL.Question.objects.all().filter(course=course)
     if request.method=='POST':
         pass
-    response= render(request,'student/start_exam.html',{'course':course,'questions':questions})
+    response= render(request,'student/start_exam.html',{'course':course,'total_questions':total_questions,'questions':questions})
     response.set_cookie('course_id',course.id)
     return response
 
