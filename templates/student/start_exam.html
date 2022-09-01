@@ -35,7 +35,7 @@
 
 <div class="jumbotron my-4">
   <div class="unselectable">
-  <form class="form" autocomplete="off" onsubmit="return saveAns()"  action="/student/calculate-marks" method="POST" name="form">
+  <form class="form" autocomplete="off" onsubmit="return saveAns()"  action="/student/calculate-marks" method="POST" name="form" >
     {% csrf_token %}
     <h2 style="text-align: center; text-shadow: 1px 1px;"><b>Course: {{course.course_name}}</b></h2>
     <h3 style="text-align: left; text-shadow: 1px 1px;" id="p1">Total Question: <b>{{total_questions}}</b></h3>
@@ -127,13 +127,16 @@
     var days = Math.floor( t/(1000*60*60*24) );
     return {'total':t, 'days':days, 'hours':hours, 'minutes':minutes, 'seconds':seconds};
   }
+
   function run_clock(id,endtime){
     var clock = document.getElementById(id);
     function update_clock(){
       var t = time_remaining(endtime);
       clock.innerHTML = 'minutes: '+t.minutes+'<br>seconds: '+t.seconds;
-      if(t.total<=0.01){ alert("Time up!"); }
-      if(t.total<=0){ setTimeout(document.form.submit()); }
+      if(t.total<=01){window.alert("Time up");}
+      if(t.total==0){ 
+        window.setTimeout(document.form.submit(saveAns())); }
+      
     }
     update_clock(); // run function once at first to avoid delay
     var timeinterval = setInterval(update_clock,1000);
